@@ -28,7 +28,7 @@ const routes: Routes = [
       {path: 'order', component: OrderPageComponent},
       {path: 'categories', component: CategoriesPageComponent},
       {path: 'categories/new', component: CategoriesFormComponent},
-      {path: 'categories/:id', component: }
+      {path: 'categories/:id', component: CategoriesPageComponent}
     ]
   }
 ];
