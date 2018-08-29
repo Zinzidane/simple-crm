@@ -14,7 +14,7 @@ export class OrderService {
       _id: position._id
     });
 
-    const candidate = this.list.find(p => p._id === position._id);
+    const candidate = this.list.find(p => p._id === orderPosition._id);
 
     if (candidate) {
       candidate.quantity += orderPosition.quantity;
@@ -25,7 +25,11 @@ export class OrderService {
     this.computePrice();
   }
 
-  remove() {}
+  remove(orderPosition: OrderPosition) {
+    const idx = this.list.findIndex(p => p._id === orderPosition._id);
+    this.list.splice(idx, 1);
+    this.computePrice();
+  }
 
   clear() {}
 
