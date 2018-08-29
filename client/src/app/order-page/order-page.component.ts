@@ -2,7 +2,9 @@ import { Component, OnInit, ViewChild, ElementRef, OnDestroy, AfterViewInit } fr
 import { Router, NavigationEnd } from '@angular/router';
 import { MaterialService, MaterialInstance } from '../shared/classes/material.service';
 import { OrderService } from './order.service';
-import { OrderPosition } from '../shared/interfaces';
+import { OrderPosition, Order } from '../shared/interfaces';
+import { OrdersService } from '../shared/services/orders.service';
+import { Subscription } from 'rxjs';
 
 @Component({
   selector: 'app-order-page',
@@ -11,12 +13,14 @@ import { OrderPosition } from '../shared/interfaces';
   providers: [OrderService]
 })
 export class OrderPageComponent implements OnInit, OnDestroy, AfterViewInit {
-  @ViewChild('modal') modalRef: ElementRef
+  @ViewChild('modal') modalRef: ElementRef;
 
-  modal: MaterialInstance
-  isRoot: boolean
+  modal: MaterialInstance;
+  isRoot: boolean;
+  oSub: Subscription;
+  pending = false;
 
-  constructor(private router: Router, private orderService: OrderService) { }
+  constructor(private router: Router, private orderService: OrderService, private ordersService: OrdersService) { }
 
   ngOnInit() {
     this.isRoot = this.router.url === '/order';
@@ -33,6 +37,9 @@ export class OrderPageComponent implements OnInit, OnDestroy, AfterViewInit {
 
   ngOnDestroy() {
     this.modal.destroy();
+    if (this.oSub) {
+      this.oSub.unsubscribe();
+    }
   }
 
   removePosition(orderPosition: OrderPosition) {
@@ -48,7 +55,26 @@ export class OrderPageComponent implements OnInit, OnDestroy, AfterViewInit {
   }
 
   submit() {
-    this.modal.close();
+    this.pending = true;
+    // Избавляемся от _id для отправки на сервер
+    const order: Order = {
+      list: this.orderService.list.map((item) => {
+        delete item._id;
+        return item;
+      })
+    };
+
+    this.oSub = this.ordersService.create(order).subscribe(
+      newOrder => {
+        MaterialService.toast(`Заказ №${newOrder.order} был добавлен.`);
+        this.orderService.clear();
+      },
+      error => MaterialService.toast(error.error.message),
+      () => {
+        this.modal.close();
+        this.pending = false;
+      }
+    );
   }
 
 }
