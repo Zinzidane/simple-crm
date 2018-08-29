@@ -1,11 +1,13 @@
 import { Component, OnInit, ViewChild, ElementRef, OnDestroy, AfterViewInit } from '@angular/core';
 import { Router, NavigationEnd } from '@angular/router';
 import { MaterialService, MaterialInstance } from '../shared/classes/material.service';
+import { OrderService } from './order.service';
 
 @Component({
   selector: 'app-order-page',
   templateUrl: './order-page.component.html',
-  styleUrls: ['./order-page.component.css']
+  styleUrls: ['./order-page.component.css'],
+  providers: [OrderService]
 })
 export class OrderPageComponent implements OnInit, OnDestroy, AfterViewInit {
   @ViewChild('modal') modalRef: ElementRef
@@ -13,7 +15,7 @@ export class OrderPageComponent implements OnInit, OnDestroy, AfterViewInit {
   modal: MaterialInstance
   isRoot: boolean
 
-  constructor(private router: Router) { }
+  constructor(private router: Router, private orderService: OrderService) { }
 
   ngOnInit() {
     this.isRoot = this.router.url === '/order';
