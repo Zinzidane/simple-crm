@@ -8,11 +8,12 @@
     "npm": "5.6.0"
   },
   "scripts": {
-    "server": "nodemon index.js",
+    "start": "node index",
+    "server": "nodemon index",
     "client-install": "npm install --prefix client",
     "client": "npm run start --prefix client",
     "dev": "concurrently \"npm run server\" \"npm run client\"",
-    "heroku-postbuild": "NPM_CONFIG_PRODUCTION=false npm run client-install && npm run postinstall --prefix client"
+    "heroku-postbuild": "NPM_CONFIG_PRODUCTION=false npm run client-install && npm run build --prefix client"
   },
   "keywords": [
     "express",
