@@ -43,3 +43,15 @@ export interface Filter {
   end?: Date,
   order?: number
 }
+
+export interface OverviewPage {
+  orders: OverviewPageItem
+  gain: OverviewPageItem
+}
+
+export interface OverviewPageItem {
+  compare: number,
+  percent: number,
+  yesterday: number,
+  isHigher: boolean
+}
