@@ -20,7 +20,7 @@ export class OrderPageComponent implements OnInit, OnDestroy, AfterViewInit {
   oSub: Subscription;
   pending = false;
 
-  constructor(private router: Router, private orderService: OrderService, private ordersService: OrdersService) { }
+  constructor(private router: Router, private order: OrderService, private ordersService: OrdersService) { }
 
   ngOnInit() {
     this.isRoot = this.router.url === '/order';
@@ -43,7 +43,7 @@ export class OrderPageComponent implements OnInit, OnDestroy, AfterViewInit {
   }
 
   removePosition(orderPosition: OrderPosition) {
-    this.orderService.remove(orderPosition);
+    this.order.remove(orderPosition);
   }
 
   open() {
@@ -76,5 +76,4 @@ export class OrderPageComponent implements OnInit, OnDestroy, AfterViewInit {
       }
     );
   }
-
 }
