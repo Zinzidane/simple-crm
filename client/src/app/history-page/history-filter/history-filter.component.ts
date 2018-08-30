@@ -7,7 +7,7 @@ import { MaterialService, MaterialDatepicker } from '../../shared/classes/materi
   templateUrl: './history-filter.component.html',
   styleUrls: ['./history-filter.component.css']
 })
-export class HistoryFilterComponent implements , OnDestroy, AfterViewInit {
+export class HistoryFilterComponent implements OnDestroy, AfterViewInit {
   @Output() onFilter = new EventEmitter<Filter>();
   @ViewChild('start') startRef: ElementRef;
   @ViewChild('end') endRef: ElementRef;
