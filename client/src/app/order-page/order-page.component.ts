@@ -58,7 +58,7 @@ export class OrderPageComponent implements OnInit, OnDestroy, AfterViewInit {
     this.pending = true;
     // Избавляемся от _id для отправки на сервер
     const order: Order = {
-      list: this.orderService.list.map((item) => {
+      list: this.order.list.map((item) => {
         delete item._id;
         return item;
       })
