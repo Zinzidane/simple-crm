@@ -13,7 +13,7 @@
     <div *ngIf="!loading; else loader">
       <div class="collection" *ngIf="positions.length !== 0; else empty">
         <a
-          *ngFor="position of positions"
+          *ngFor="let position of positions"
           (click)="onSelectPosition(position)"
           class="collection-item collection-item-icon"
         >
