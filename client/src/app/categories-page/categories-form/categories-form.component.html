@@ -29,7 +29,9 @@
         class="helper-text red-text"
         *ngIf="form.get('name').invalid && form.get('name').touched"
       >
-        <span *ngIf="form.get('name').errors['required']">Имя категории не может быть пустым</span>
+        <span *ngIf="form.get('name').errors['required']">
+          Имя категории не может быть пустым.
+        </span>
       </span>
     </div>
 
@@ -53,10 +55,11 @@
 
     <div>
       <button
-        [disabled]="form.invalid || form.disabled"
         type="submit"
-        class="waves-effect waves-light btn">
-          Сохранить изменения
+        [disabled]="form.invalid || form.disabled"
+        class="waves-effect waves-light btn"
+      >
+        Сохранить изменения
       </button>
     </div>
   </form>
@@ -70,4 +73,8 @@
   </div>
 </div>
 
-<app-positions-form *ngIf="category?._id" [categoryId]="category._id"></app-positions-form>
+<app-positions-form
+  *ngIf="category?._id"
+  [categoryId]="category._id"
+>
+</app-positions-form>

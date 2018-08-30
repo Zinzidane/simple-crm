@@ -1,5 +1,5 @@
 <div *ngIf="positions$ | async as positions; else loader">
-  <table class="highlight" *ngIf="positions.length !== 0; else emptyBlock">
+  <table class="highlight" *ngIf="positions.length !== 0; else empty">
     <thead>
     <tr>
       <th>Название</th>
@@ -15,17 +15,22 @@
       <td>{{position.cost}} руб.</td>
       <td>
         <div class="input-field inline order-position-input">
-          <input type="number" min="1" [(ngModel)]="position.quantity">
+          <input type="number" value="1" min="1" [(ngModel)]="position.quantity">
         </div>
       </td>
       <td>
-        <button class="btn waves-effect wavers-light btn-small" (click)="addToOrder(position)" [disabled]="!position.quantity">Добавить</button>
+        <button
+          class="btn waves-effect wavers-light btn-small"
+          (click)="addToOrder(position)"
+          [disabled]="!position.quantity"
+        >Добавить</button>
       </td>
     </tr>
     </tbody>
   </table>
-  <ng-template #emptyBlock>
-    <div class="center">В данной категории пока нет позиций</div>
+
+  <ng-template #empty>
+    <div class="center">В данной категории пока нет позиций.</div>
   </ng-template>
 </div>
 

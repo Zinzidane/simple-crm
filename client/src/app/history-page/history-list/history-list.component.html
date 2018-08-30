@@ -12,8 +12,8 @@
   <tbody>
   <tr *ngFor="let order of orders">
     <td>{{order.order}}</td>
-    <td>{{order.date | date: 'dd.MM.yyyy'}}</td>
-    <td>{{order.date | date: 'HH:mm:ss'}}</td>
+    <td>{{order.date | date:'dd.MM.yyyy'}}</td>
+    <td>{{order.date | date:'HH:mm:ss'}}</td>
     <td>{{computePrice(order)}} руб.</td>
     <td>
       <button class="btn btn-small grey darken-1" (click)="selectOrder(order)">
@@ -23,6 +23,7 @@
   </tr>
   </tbody>
 </table>
+
 
 <div class="modal modal-fixed-footer" #modal>
   <div class="modal-content" *ngIf="selectedOrder">
