@@ -1,5 +1,10 @@
-import { Component, OnInit, ViewChild, ElementRef, AfterViewInit } from '@angular/core';
+import { Component, OnInit, OnDestroy, ViewChild, ElementRef, AfterViewInit } from '@angular/core';
 import { MaterialInstance, MaterialService } from '../shared/classes/material.service';
+import { OrdersService } from '../shared/services/orders.service';
+import { Subscription } from 'rxjs';
+import { Order } from '../shared/interfaces';
+
+const STEP = 2;
 
 @Component({
   selector: 'app-history-page',
@@ -10,17 +15,50 @@ export class HistoryPageComponent implements OnInit, OnDestroy, AfterViewInit {
   @ViewChild('tooltip') tooltipRef: ElementRef;
   tooltip: MaterialInstance;
   isFilterVisible = false;
+  oSub: Subscription;
+  orders: Order[] = [];
 
-  constructor() { }
+  offset = 0;
+  limit = STEP;
+
+  loading = false;
+  reloading = false;
+  noMoreOrders = false;
+
+  constructor(private ordersService: OrdersService) { }
 
   ngOnInit() {
+    this.reloading = true;
+    this.fetch();
+  }
+
+  private fetch() {
+    const params = {
+      offset: this.offset,
+      limit: this.limit
+    };
+   this.oSub = this.ordersService.fetch(params).subscribe(
+      orders => {
+        this.orders = this.orders.concat(orders);
+        this.noMoreOrders = orders.length < STEP ? true : false;
+        this.loading = false;
+        this.reloading = false;
+      }
+    );
   }
 
   ngOnDestroy() {
     this.tooltip.destroy();
+    this.oSub.unsubscribe();
   }
 
   ngAfterViewInit() {
     this.tooltip = MaterialService.initTooltip(this.tooltipRef);
+  }
+
+  loadMore() {
+    this.loading = true;
+    this.offset += STEP;
+    this.fetch();
   }
 }
