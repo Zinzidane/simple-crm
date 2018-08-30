@@ -67,7 +67,7 @@ export class OrderPageComponent implements OnInit, OnDestroy, AfterViewInit {
     this.oSub = this.ordersService.create(order).subscribe(
       newOrder => {
         MaterialService.toast(`Заказ №${newOrder.order} был добавлен.`);
-        this.orderService.clear();
+        this.order.clear();
       },
       error => MaterialService.toast(error.error.message),
       () => {
