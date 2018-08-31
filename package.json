@@ -19,7 +19,7 @@
     "express",
     "angular"
   ],
-  "author": "Vladilen Minin",
+  "author": "ivan muliarchyk",
   "license": "ISC",
   "dependencies": {
     "bcryptjs": "^2.4.3",
